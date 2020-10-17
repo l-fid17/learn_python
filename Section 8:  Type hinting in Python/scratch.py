@@ -3,8 +3,8 @@ from typing import List, Dict, Union
 def my_function() -> None: # -> None *type hint*
     pass
 
-
-hoover_over_me = my_function()
+# uncomment below and
+# hover_over_me = my_function()
 
 def another_func() -> List[Dict(str, Union(str, int))]: # List of Dict(s) each of which has KEYS of type 'str' and values of type "str" and/or "int"
     return [{"a": "a", "b": "b", "c": 0}, {"a": "a", "b": "b", "c": 0}]
