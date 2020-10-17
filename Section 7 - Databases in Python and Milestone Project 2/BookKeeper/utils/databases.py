@@ -1,36 +1,51 @@
-books_file = "books.csv"
+import sqlite3
 
-def add_book(name, author):
-    with open(books_file, "a") as file:
-        file.write(f"{name}#{author}#0\n")
+def create_book_table():
+    db = sqlite3.connect("data.db")
+    cursor = db.cursor()
 
-def mark_as_read(name):
-    books = list_all_books()
-    for book in books:
-        if book["name"] == name:
-            book["read"] = 1
-    
-    _save_all_books(books)
+    cursor.execute("CREATE TABLE IF NOT EXISTS books(name text primary key, author text, read integer)")
 
-def delete_book(name):
-    books = list_all_books()
-    books = [book for book in books if book["name"] != name]
-    _save_all_books(books)
+    db.commit()
+    db.close()
+
 
 def list_all_books():
-    with open(books_file, "r") as file:
-        lines = [line.strip().split("#") for line in file.readlines()]
-        print(lines)
+    db = sqlite3.connect("data.db")
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM books") # get everything from the table
+    books = [{'name': row[0], 'author': row[1], 'read': row[2]} for row in cursor.fetchall()] # read table line by line and convert to dict
+
+    db.close()
+    return books
 
 
-    return [
-        {"name": line[0], "author": line[1], "read": line[2]}
-        for line in lines
-    ]
+def add_book(name, author):
+    db = sqlite3.connect("data.db")
+    cursor = db.cursor()
+
+    cursor.execute("INSERT INTO books VALUES(?, ?, 0)", (name, author)) # do this to prevent SQL injection
+
+    db.commit()
+    db.close()
 
 
-def _save_all_books(books):
-    with open(books_file, "w") as file:
-        for book in books:
-            file.write(f"{book['name']}#{book['author']}#{book['read']}\n")
-            
+def mark_as_read(name):
+    db = sqlite3.connect("data.db")
+    cursor = db.cursor()
+
+    cursor.execute("UPDATE books SET read=1 WHERE name=?", (name,))
+
+    db.commit()
+    db.close()
+
+
+def delete_book(name):
+    db = sqlite3.connect("data.db")
+    cursor = db.cursor()
+
+    cursor.execute("DELETE FROM books WHERE name=?", (name,))
+
+    db.commit()
+    db.close()

@@ -12,6 +12,7 @@ Your choice: """
 
 
 def menu():
+    databases.create_book_table()
     user_input = input(USER_CHOICE)
     while user_input != 'q':
         if user_input == 'a':
@@ -35,7 +36,10 @@ def add_book():
     databases.add_book(name_input, author_input)
 
 def list_all():
-    databases.list_all_books()
+    books = databases.list_all_books()
+    for book in books:
+        read = 'Yes' if book["read"] else 'No'
+        print(f"{book['name']} by {book['author']}, read: {read}")
 
 def mark_as_read():
     databases.mark_as_read(input("Name: "))
