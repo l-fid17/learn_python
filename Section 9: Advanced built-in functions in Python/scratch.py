@@ -60,3 +60,7 @@ class FirstFiveIterator: # we don't generate numbers but return them from a list
             raise StopIteration()
 
 
+"""
+Iterables
+are the ones we can loop through
+"""
