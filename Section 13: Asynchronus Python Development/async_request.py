@@ -14,8 +14,8 @@ async def fetch_page(session, url):
     page_start = time.time()
     async with async_timeout.timeout(10):
         async with session.get(url) as response:
-        print(f"Page took {time.time() - page_start}s to load")
-        return response.status
+            print(f"Page took {time.time() - page_start}s to load")
+            return response.status
 
 
 async def get_multiple_pages(loop, urls):
