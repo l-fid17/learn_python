@@ -13,6 +13,6 @@ def multiply(*args: Union[int, float]):
     
     total = 1
     for arg in args:
-        total *=arg
+        total *= arg
     
     return total

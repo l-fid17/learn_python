@@ -1,5 +1,5 @@
 from unittest import TestCase
-from printer import Printer
+from printer import Printer, PrintError
 
 class TestPrinter(TestCase):
     def setUp(self): # this one will run before each test runs (so the printer object is a new object for every test function)
@@ -18,7 +18,7 @@ class TestPrinter(TestCase):
         self.assertEqual(f"Printed 25 pages in 12.50 seconds.", message)
 
     def test_print_outside_capacity(self):
-        with self.assertRaises(PrinterError):
+        with self.assertRaises(PrintError):
             self.printer.print(301)
 
     def test_print_exact_capacity(self):
@@ -49,5 +49,5 @@ class TestPrinter(TestCase):
         self.printer.print(50)
         self.printer.print(225)
 
-        with self.assertRaises(PrinterError):
+        with self.assertRaises(PrintError):
             self.printer.print(1)

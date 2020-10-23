@@ -38,7 +38,7 @@ class TestFunctions(TestCase):
     
     def test_multiply_single_value(self):
         expected = 15
-        self.assertRaises(multiply(expected), expected)
+        self.assertEqual(multiply(expected), expected)
 
     def test_multiply_zero(self):
         expected = 0
